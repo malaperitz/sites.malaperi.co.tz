@@ -15,7 +15,7 @@ class CreateSiteCategoryTable extends Migration
     {
         Schema::create('site_category', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('category_name');
             $table->string('description');
             $table->string('icon')->default('logo.PNG');
             $table->timestamps();

@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\SiteCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Support\Facades\Hash;
 // use Illuminate\Http\Support\Facades\Alert;
-use Illuminate\Http\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Support\Facades\Hash;
 use Illuminate\Contracts\Encryption\DecryptException;
 // use RealRashid\SweetAlert\Facades\Alert;
 
@@ -191,15 +193,31 @@ class SiteCategoryController extends Controller
         {
             return view('permissiondenied');
         }
+        DB::beginTransaction();
+        try {
+            $sitecategory = SiteCategory::find(Crypt::decryptString($request));
 
-        $sitecategory = SiteCategory::find(Crypt::decryptString($request));
-        if($sitecategory->delete())
-        {
-        $route ='view.sitecategory';
-        return redirect()->route('view.sitecategory')->with('message','SiteCategory   Deleted Succesfully');
+            if ($sitecategory->delete()) {
+                DB::commit();
+
+                // File deletion after successful transaction
+                // $image_path = public_path("assets/img/{$sitecategory->icon}");
+                // if (File::exists($image_path)) {
+                //     unlink($image_path);
+                // }
+                if (Storage::exists("assets/img/{$sitecategory->icon}")) {
+                    Storage::delete("assets/img/{$sitecategory->icon}");
+                }
+
+                return redirect()->route('view.sitecategory')->with('message', 'SiteCategory Deleted Successfully');
+            }
+        } catch (\Exception $th) {
+            DB::rollBack();
+            return redirect()->back()->with('message', 'SiteCategory Could Not Be Deleted Successfully!');
         }
-
     }
+
+    
     public static function getRole()
     {
         return 'Inventory';
