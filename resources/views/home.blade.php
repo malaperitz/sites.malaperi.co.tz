@@ -54,24 +54,6 @@
 
             </div><!-- End Customers Card -->
             @endforeach
-<!-- 
-                      <tr>
-                        <th scope="row"><a href="#" target="_blank"><img src="assets/img/{{$sitecategory->icon}}" alt=""></a></th>
-                        <td><a href="{{route('view.site.site_category', $sitecategory->category_name)}}"  class="text-primary fw-bold">{{$sitecategory->category_name}}</a></td>
-                        <td>{{$sitecategory->description}}</td>
-                        <td class="fw-bold">
-                          {{$sitecategory->countSitesInCategory($sitecategory->id)}}
-                          </td>
-                        @permission(['sitecategory-delete','sitecategory-update'])
-                        <td>
-                            <a  href="{{route('edit.sitecategory', Crypt::encryptString($sitecategory->id))}}" class="btn btn-outline-info btn-sm">update</a>
-                            <a  href="{{route('delete.sitecategory', Crypt::encryptString($sitecategory->id))}}" class="btn btn-outline-danger btn-sm">delete</a>
-                        </td>
-                        @endpermission
-                      </tr> -->
-         
-
-            
 
           </div>
         </div><!-- End Left side columns -->

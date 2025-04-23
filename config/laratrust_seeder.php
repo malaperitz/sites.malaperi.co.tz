@@ -18,7 +18,7 @@ return [
             'sitecategory' => 'r,u,d,c',
             'profile' => 'r,u',
         ],
-        'administrator' => [
+    'administrator' => [
             'users' => 'c,r,u,d',
             'profile' => 'r,u',
             'site' => 'r,u,d,c',

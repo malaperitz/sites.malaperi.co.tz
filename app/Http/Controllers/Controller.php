@@ -93,21 +93,21 @@ class Controller extends BaseController
 
 
 
-$bug = Bug::findOrFail($id);
+// $bug = Bug::findOrFail($id);
 
 
-if ($request->hasFile('attachment')) {
-    $file = $request->file('attachment');
-    $fileName = time() . '_' . $file->getClientOriginalName();
-    $file->move('attachments/', $fileName);
-        $validatedData['attachment'] = $fileName;
-}
-else
-{
-    $validatedData['attachment']=$bug->attachment;
+// if ($request->hasFile('attachment')) {
+//     $file = $request->file('attachment');
+//     $fileName = time() . '_' . $file->getClientOriginalName();
+//     $file->move('attachments/', $fileName);
+//         $validatedData['attachment'] = $fileName;
+// }
+// else
+// {
+//     $validatedData['attachment']=$bug->attachment;
 
-}
+// }
 
-$bug->fill($validatedData);
-$bug->save();
+// $bug->fill($validatedData);
+// $bug->save();
 }
