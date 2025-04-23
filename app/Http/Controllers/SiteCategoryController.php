@@ -166,6 +166,12 @@ class SiteCategoryController extends Controller
         $sitecategory->description=$request['description'];
         if($request->file())
         {
+            
+            // Remove Available in Server
+            if (Storage::exists("assets/img/{$sitecategory->icon}")) {
+                Storage::delete("assets/img/{$sitecategory->icon}");
+            }
+
             if($request->file('icon'))
             {
                 $fileName2 = time().'sitecategory'.'_'.$request->category_name.'.'.$request->icon->getClientOriginalExtension();
