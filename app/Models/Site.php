@@ -21,6 +21,10 @@ class Site extends Model
        $site = Site::where('category',$category_id)->get();
        return $site;
     }
+    function siteCategory()
+    {
+       return  $this->belongsTo(SiteCategory::class,'category');
+    }
     function countSitesInCategory($category_id)
     {
        $site = $this->sitesByCategory($category_id)->count();

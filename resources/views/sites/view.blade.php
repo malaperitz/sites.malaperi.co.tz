@@ -43,10 +43,10 @@
                     <tbody>
                         @foreach($site as $site)
                       <tr>
-                        <th scope="row"><a href="#" target="_blank"><img src="{{asset('assets/img/'.$site->cicon)}}" alt=""></a></th>
+                        <th scope="row"><a href="#" target="_blank"><img src="{{asset('assets/img/'.$site->siteCategory->icon)}}" alt=""></a></th>
                         <!-- <th scope="row"><a href="#" target="_blank"><img src="{{asset('assets/img/',$site->cicon)}}" alt="{{$site->cicon}}"></a></th> -->
                         <td><a href="{{$site->url}}" target="_blank" class="text-primary fw-bold">{{$site->name}}</a></td>
-                        <td>{{$site->scategory}}</td>
+                        <td>{{$site->siteCategory->category_name}}</td>
                         <td class="fw-bold">{{$site->url}}</td>
                         @permission(['site-delete','site-update'])
                         <td>

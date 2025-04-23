@@ -28,25 +28,26 @@
                         <th scope="col">name</th>
                         <th scope="col">category</th>
                         <th scope="col">url</th>
-                        @permission(['site-delete','site-update','site-create'])
                         <th scope="col">
+                        @permission(['site-delete','site-update','site-create'])
                         <a  href="{{route('create.site')}}" class="btn btn-outline-success btn-sm">create</a>
-                        </th>
                         @endpermission
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
                         @foreach($site as $site)
                       <tr>
-                        <th scope="row"><a href="{{$site->url}}" target="_blank"><img src="assets/img/{{$site->icon}}" alt=""></a></th>
+                        <th scope="row"><a href="{{$site->url}}" target="_blank"><img src="{{ asset('assets/img/'.$site->siteCategory->icon)}}" alt=""></a></th>
                         <td><a href="#" class="text-primary fw-bold">{{$site->name}}</a></td>
-                        <td>{{$site->category}}</td>
+                        <td>{{$site->siteCategory->category_name}}</td>
                         <td class="fw-bold">{{$site->url}}</td>
-                        @permission(['site-delete','site-update'])
                         <td>
+                        @permission(['site-delete','site-update'])
                             <a  href="{{route('edit.site')}}" class="btn btn-outline-info btn-sm">update</a>
-                        </td>
                         @endpermission
+                            <a  href="{{url($site->url)}}" target="#" class="btn btn-outline-info btn-sm"><i class="bi bi-link""></i></a>
+                        </td>
                       </tr>
 
                         @endforeach

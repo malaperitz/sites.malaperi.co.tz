@@ -27,16 +27,13 @@ class SiteController extends Controller
          if(Auth::user()->isAbleTo('site-read'))
          {
             //  $site = Site::all();
-             $site = \DB::table('sites')->select('sites.*','site_category.category_name as scategory','site_category.icon as cicon')->leftjoin('site_category','site_category.id','sites.category')->get();
+             $site = Site::all();
              return view('sites/view', ['site' =>$site, 'category'=>'All']);
          }
          else
          {
              return view('permissiondenied');
-             $site = \DB::table('sites')->select('sites.*','site_category.category_name as scategory','site_category.icon as cicon')->leftjoin('site_category','site_category.id','sites.category')->get();
-            //  $site = Site::all();
-             return view('sites/view', ['site' =>$site, 'category'=>'All']);
-             
+            
          }
     }
       /**
@@ -64,22 +61,26 @@ class SiteController extends Controller
          // Auth::user()->hasRole('administrator');
          if(Auth::check() && Auth::user()->isAbleTo('site-read'))
          {
-             $ctgry = SiteCategory::where('category_name',$category_id)->get();
-             foreach($ctgry as $cate)
-             {
-             $site = \DB::table('sites')->select('sites.*','site_category.category_name as scategory','site_category.icon as cicon')->leftjoin('site_category','site_category.id','sites.category')->where(['category'=>$cate->id])->get();
-            //  $site = Site::where(['category'=>$cate->id])->get();
-                return view('sites/view', ['site' =>$site, 'category'=>'movies']);
-             }
-             $site = \DB::table('sites')->select('sites.*','site_category.category_name as scategory', 'site_category.icon as cicon')->leftjoin('site_category','site_category.id','sites.category')->where(['category' =>$category_id])->get();
-            //  $site = Site::where(['category' =>$category_id])->get();
-             return view('sites/view', ['site' =>$site, 'category'=>'drama']);
+             $ctgry = SiteCategory::where('category_name',$category_id)->first();
+             $sctgry = Site::where('category',$ctgry->id)->get();
+            //  foreach($sctgry as $cate)
+            //  {
+            //  $site = \DB::table('sites')->select('sites.*','site_category.category_name as scategory','site_category.icon as cicon')->leftjoin('site_category','site_category.id','sites.category')->where(['category'=>$cate->id])->get();
+            // //  $site = Site::where(['category'=>$cate->id])->get();
+            //     return view('sites/view', ['site' =>$site, 'category'=>'movies']);
+            //  }
+
+             $site = Site::where(['category' =>$ctgry->id])->get();
+            dd($site);
+             //  $site = Site::where(['category' =>$category_id])->get();
+             return view('sites/view', ['site' =>$site, 'category'=>$category_id]);
          }
          else
          {
             //  return view('permissiondenied');
-            $site = Site::where('category','movie')->get();
-            return view('sites/view_site_category', ['site' =>$site, 'category'=>'Movies']);
+            $ctgry = SiteCategory::where('category_name',$category_id)->first();
+            $site = Site::where('category',$ctgry->id)->get();
+            return view('sites/view_site_category', ['site' =>$site, 'category'=>$ctgry->category_name]);
          }
     }
     public function view_musics()

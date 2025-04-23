@@ -18,6 +18,10 @@ class SiteCategory extends Model
 
        return $site;
     }
+    public function sites()
+    {
+      $this->hasMany(Site::class,'category','id');
+    }
     function countSitesInCategory($category_id)
     {
        $site = $this->sitesByCategory($category_id)->count();
