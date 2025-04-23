@@ -71,7 +71,7 @@ class SiteController extends Controller
             //  }
 
              $site = Site::where(['category' =>$ctgry->id])->get();
-            dd($site);
+            // dd($site);
              //  $site = Site::where(['category' =>$category_id])->get();
              return view('sites/view', ['site' =>$site, 'category'=>$category_id]);
          }
